@@ -3,7 +3,6 @@ package sealing
 import (
 	"bytes"
 	"context"
-
 	"golang.org/x/xerrors"
 
 	"github.com/filecoin-project/go-address"
@@ -162,4 +161,19 @@ func (m *Sealing) checkCommit(ctx context.Context, si SectorInfo, proof []byte, 
 	}
 
 	return nil
+}
+
+func CheckSectorStatus(state SectorState) error {
+	flag := false
+	for _,v:= range StatusList{
+		if v == state{
+			flag = true
+		}
+	}
+
+	if flag{
+		return nil
+	}
+
+	return xerrors.Errorf("the sectorState isn't in state list,state:%s",state)
 }

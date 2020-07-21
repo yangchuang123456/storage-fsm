@@ -70,6 +70,21 @@ type UnsealedSectorInfo struct {
 	pieceSizes []abi.UnpaddedPieceSize
 }
 
+func initLog() {
+	//os.Setenv("GOLOG_FILE","fsm.log")
+	//os.Setenv("GOLOG_LOG_LEVEL","level")
+	logging.SetupLogging(logging.Config{
+		Format: logging.ColorizedOutput,
+		Level:  logging.LevelInfo,
+		Stderr: false,
+		Stdout: false,
+		File:   "fsm.log",
+	})
+	_ = logging.SetLogLevel("*", "ERROR")
+	_ = logging.SetLogLevel("sectors", "DEBUG")
+	_ = logging.SetLogLevel("storageminer", "DEBUG")
+}
+
 func New(api SealingAPI, events Events, maddr address.Address, ds datastore.Batching, sealer sectorstorage.SectorManager, sc SectorIDCounter, verif ffiwrapper.Verifier, pcp PreCommitPolicy, gsd GetSealingDelayFunc) *Sealing {
 	s := &Sealing{
 		api:    api,
@@ -87,7 +102,7 @@ func New(api SealingAPI, events Events, maddr address.Address, ds datastore.Batc
 	}
 
 	s.sectors = statemachine.New(namespace.Wrap(ds, datastore.NewKey(SectorStorePrefix)), s, SectorInfo{})
-
+	initLog()
 	return s
 }
 

@@ -36,3 +36,34 @@ const (
 	RemoveFailed SectorState = "RemoveFailed"
 	Removed      SectorState = "Removed"
 )
+
+var StatusList = []SectorState{
+	UndefinedSectorState,
+	Empty,
+	WaitDeals,
+	Packing,
+	PreCommit1,
+	PreCommit2,
+	PreCommitting,
+	PreCommitWait,
+	WaitSeed,
+	Committing,
+	CommitWait,
+	FinalizeSector,
+	Proving,
+	FailedUnrecoverable,
+	SealPreCommit1Failed,
+	SealPreCommit2Failed,
+	PreCommitFailed,
+	ComputeProofFailed,
+	CommitFailed,
+	PackingFailed,
+	FinalizeFailed,
+
+	Faulty,
+	FaultReported,
+	FaultedFinal,
+	Removing,
+	RemoveFailed,
+	Removed,
+}
